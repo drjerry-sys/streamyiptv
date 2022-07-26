@@ -196,6 +196,6 @@ CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://' + REDIS_HOST + ':
 CELERY_BEAT_SCHEDULE = {
     "scheduled_task": {
         "task": "scraper.tasks.scrape_mydash",
-        "schedule": 60.0,
+        "schedule": 900.0,
     }
 }

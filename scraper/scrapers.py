@@ -88,4 +88,5 @@ def scrape(login_url, activityLogUrl):
     # scraping from mydash.one
     time.sleep(0.3) 
     driver.get(activityLogUrl)
+    time.sleep(10)
     handleScraping(driver, mydash)
