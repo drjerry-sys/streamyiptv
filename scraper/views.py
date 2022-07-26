@@ -94,7 +94,7 @@ def allusers(request):
         # scrape(login_url, activityLogUrl)
         pass
 
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         userData = ScrapedData.objects.all().values()
         return JsonResponse({'data': list(userData)})
     
