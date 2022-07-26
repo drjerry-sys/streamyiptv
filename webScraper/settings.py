@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from django.conf import settings
+# from 
 # import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -182,6 +183,7 @@ REDIS_HOST = 'localhost'
 REDIS_PORT = '6379'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 # heroku
+CELERY_IMPORTS = ("scraper.tasks", )
 CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
 CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
 
