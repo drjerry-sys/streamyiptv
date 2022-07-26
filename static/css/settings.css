@@ -1,0 +1,172 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --avatar-color: rgb(243, 19, 56);
+    --avatar-size: 3.5rem;
+    --white: #fff;
+    --username-color: gray;
+    --deeper-gray: #cccccc;
+    --mybrown: #f48225;
+    --font: Montserrat;
+    --handwritting: 'Pacifico', cursive;
+    --close-to-black: rgb(34, 31, 31);
+}
+
+.section {
+    padding: 0;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.user-avatar {
+    background-color: var(--avatar-color);
+    border-radius: 50%;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+}
+
+.avatar-text {
+    font-family: var(--font);
+    font-weight: 500;
+    color: var(--white);
+    text-align: center;
+    font-size: 2rem;
+    margin: auto;
+}
+
+.display-username {
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--username-color);
+}
+
+.section-2 {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.display-aside {
+    flex: 1;
+    height: 100%;
+    /* border: 1px solid var(--deeper-gray); */
+    border-radius: 0.4rem;
+}
+
+.display-main {
+    flex: 4;
+    border-radius: 0.4rem;
+}
+
+.aside-ul {
+    list-style: none;
+    padding: 2rem;
+}
+
+.aside-ul li {
+    padding: 0;
+    margin: 0;
+}
+
+.menus {
+    font-size: 1.5rem;
+    font-weight: 500;
+    display: block !important;
+    text-decoration: none;
+    transition: color .5s, all .2s;
+}
+
+.menus:hover {
+    background: var(--mybrown);
+    color: var(--white) !important;
+    text-decoration: none;
+    font-style: none;
+    border-radius: 3rem;
+    text-align: center;
+}
+
+.active {
+    background: var(--mybrown);
+    color: var(--white) !important;
+    text-decoration: none;
+    font-style: none;
+    border-radius: 3rem;
+    text-align: center;
+}
+
+.main-title {
+    font-family: var(--font);
+    font-weight: 700;
+}
+
+table {
+    font-size: 1.3rem;
+    color: var(--close-to-black);
+}
+
+/* specific to dashboard */
+.activity-panel {
+    display: flex;
+    flex-direction: row;
+}
+
+.activity-report {
+    background-color: var(--white);
+    flex: 3;
+}
+
+.activity-active {
+    flex: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.active-icon {
+    font-size: 5rem;
+}
+
+.online-users {
+    display: flex;
+    justify-content: space-around;
+}
+
+.add-weight {
+    font-family: var(--font);
+    font-weight: 900;
+    font-size: 3rem;
+}
+
+.welcome-pic {
+    width: 100%;
+    background: url("https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?t=st=1657800738~exp=1657801338~hmac=52035b375cb4a9fe16ecdebb828aca4ecfc61f4d7f8f08024fdbe8cbdb20a5cb&w=740");
+    height: 20rem;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.welcome-img {
+    height: 15rem;
+}
+
+.welcome-text1 {
+    font-family: var(--font);
+}
+
+.welcome-text {
+    font-family: var(--handwritting);
+    font-size: 4rem;
+}

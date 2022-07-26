@@ -1,0 +1,149 @@
+{% extends 'users.html' %}
+{% load static %}
+{% block changingpart %}
+{% block title %}| settings{% endblock title %}
+<main class="display-main bg-light ml-5">
+  <header>
+      <h1 class="px-5 py-3 main-title">Settings</h1>
+  </header>
+  
+  <div class="px-5 py-3">
+      <h4>scraper login</h4>
+      <span>change scraper login details</span>
+        <div id="alert" class="" role="alert"></div>
+      <form id="scraper-password" method="POST">
+        {% csrf_token %}
+          <div class="row py-3">
+              <div class="col">
+                <label for="fscrapemail" class="form-label">Your email:</label>
+                <input type="email" class="form-control" placeholder="Enter email" name="fscrapemail">
+              </div>
+              <div class="col">
+                <label for="fscrappassword" class="form-label">Your password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" name="fscrappassword">
+              </div>
+          </div>
+          <div class="row ">
+              <div class="col">
+                <label for="nscrapemail" class="form-label">Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" name="nscrapemail">
+              </div>
+              <div class="col">
+                <label for="nscrappassword" class="form-label">Confirm password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" name="nscrappassword">
+              </div>
+          </div>
+          
+          <button type="submit" id="submit1" class="btn btn-primary mt-2">Submit</button>
+        </form>
+  </div>
+
+  <div class="px-5 py-3">
+      <h4>mydash.one login</h4>
+      <span>change mydash.one login details</span>
+      <div id="alert2" class="" role="alert"></div>
+      <form action="" id="mydash-form" method="POST">
+        {% csrf_token %}
+          <div class="row py-3">
+              <div class="col">
+                <label for="mydashusername" class="form-label">Formal Username:</label>
+                <input type="text" class="form-control" placeholder="Enter username" name="mydashusername">
+              </div>
+              <div class="col">
+                <label for="mydashpswd" class="form-label">Formal password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" name="mydashpswd">
+              </div>
+          </div>
+          <div class="row ">
+            <div class="col">
+              <label for="mydashnpswd" class="form-label">New password:</label>
+              <input type="password" class="form-control" placeholder="Enter password" name="mydashnpswd">
+            </div>
+            <div class="col">
+              <label for="mydashnusername" class="form-label">Confirm password:</label>
+              <input type="password" class="form-control" placeholder="Enter password" name="mydashnusername">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+  </div>
+</main>
+{% endblock changingpart %}
+{% block myscripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+      function alertType(type, message, id) {
+        var alert = document.getElementById(id)
+        alert.classList.add("alert", `alert-${type}`)
+        alert.innerHTML = `<h4>${message}</h4>`
+      }
+
+      $(document).ready(function () {
+        $('#scraper-password').on("submit", function (e) {
+          e.preventDefault()
+          let alertId  = 'alert'
+          var formData = {
+            fscrapemail: $("input[name=fscrapemail]").val(),
+            fscrappassword: $("input[name=fscrappassword]").val(),
+            nscrapemail: $("input[name=nscrapemail]").val(),
+            nscrappassword: $("input[name=nscrappassword]").val(),
+          }
+          window.CSRF_TOKEN = "{{ csrf_token }}";
+          if ($("input[name=nscrapemail]").val() == $("input[name=nscrappassword]").val()) {
+            $.ajax({
+              method: "POST",
+              url: "{% url 'settings' %}",
+              data: {
+                formData, 
+                form_type: "scraper",
+                csrfmiddlewaretoken: window.CSRF_TOKEN,
+              },
+            }).then(function (data) {
+              if (data == 'messages') {
+                alertType('success', 'successfully changed!', alertId)
+                window.location.reload();
+              } else {
+                alertType('danger', 'password failed, check formal password!', alertId)
+              }
+            });
+          } else {
+            alertType('danger', 'new password do not match!', alertId)
+          }
+        });
+
+        $('#mydash-form').on("submit", function (e) {
+          e.preventDefault()
+          let alertId  = 'alert2'
+          var formData = {
+            mydashusername: $("input[name=mydashusername]").val(),
+            mydashpswd: $("input[name=mydashpswd]").val(),
+            mydashnusername: $("input[name=mydashnusername]").val(),
+            mydashnpswd: $("input[name=mydashnpswd]").val(),
+          };
+          window.CSRF_TOKEN = "{{ csrf_token }}";
+          if ($("input[name=mydashnusername]").val() == $("input[name=mydashnpswd]").val()) {
+            $.ajax({
+              method: "POST",
+              url: "{% url 'settings' %}",
+              data: {
+                formData, 
+                form_type: "mydash",
+                csrfmiddlewaretoken: window.CSRF_TOKEN,
+              },
+            }).then(function (data) {
+              if (data == 'messages') {
+                alertType('success', 'successfully changed!', alertId)
+                window.location.reload();
+              } else {
+                alertType('danger', 'password failed, check formal password!', alertId)
+              }
+            });
+          } else {
+            alertType('danger', 'new password do not match!', alertId)
+          }
+        })
+      });
+
+    </script>
+{% endblock myscripts %}

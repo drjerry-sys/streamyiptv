@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    {% endblock style %}
+{% block bodycode %}
+
+<section class="container-fluid main-section">
+    <div class="wrapper">
+        <header style="width: 100%;">
+            <img src="{% static 'assets/logo-original.png' %}" class="center-logo" alt="streamyIPTV-Logo">
+        </header>
+            <form class="form" method="POST">
+                {% csrf_token %}
+                <span class="signin-text">Sign In to Account</span>
+
+                {% if status %}
+                    <div class="alert alert-danger mt-2">
+                        <strong>Invalid!</strong> Check your credentials.
+                    </div>
+                {% endif %}
+
+                <div class="mb-3 mt-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="pwd" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                </div>
+                <div>
+                    <a href="{% url 'forgot_password' %}" style="display: inline-block;" class="mb-2">
+                        forgot password?
+                    </a>
+                </div>
+                <button type="submit" id="submit-button" class="btn btn-primary custom-btn">Login</button>
+
+                <!-- <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <input type="submit" value="Sign in"> -->
+            </form>
+        </div>
+    </section>
+{% endblock bodycode %}
+{% block myscripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock myscripts %}

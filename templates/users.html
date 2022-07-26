@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| users{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/settings.css' %}">
+    {% endblock style %}
+{% block bodycode %}
+    <section class="container-fluid section">
+        <header>
+            <nav class="navbar navbar-light bg-light px-5">
+                <a class="navbar-brand" href="{% url 'dashboard' %}">
+                  <img src="{% static '/assets/logo-original.png' %}" height="50" alt="streamyiptv-logo">
+                </a>
+                <div class="nav">
+                    <div class="user-avatar">
+                        <h2 class="avatar-text">{{ request.user.username.0 | capfirst }}</h2>
+                    </div>
+                    <span class="p-3 display-username">{{ request.user.username }}</span>
+                </div>
+            </nav>
+        </header>
+    </section>
+    <section class="container-fluid py-0 mt-5 section-2">
+        <aside class="display-aside bg-light">
+          {% with request.resolver_match.url_name as url_name %}
+            <ul class="py-5 aside-ul">
+                <li><a href="{% url 'dashboard' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'dashboard' %}active{% endif %}"><i class="bi bi-speedometer mr-3"></i></i>Dashboard</a></li>
+                <li><a href="{% url 'users' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'users' %}active{% endif %}" ><i class="bi bi-people-fill mr-3"></i></i>Users<span class="badge bg-danger ml-2 text-white">5</span></a></li>
+                <li><a href="{% url 'settings' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'settings' %}active{% endif %}"><i class="bi bi-gear-fill mr-3"></i>Settings</a></li>
+            </ul>
+          {% endwith %}
+        </aside>
+        {% block changingpart %}
+        <main class="display-main bg-light ml-5">
+            <header>
+                <h1 class="px-5 pt-3 main-title">Users</h1>
+                <span class="px-5 pb-3 main-title">All Users</span>
+            </header>
+            <div class="mx-5 my-5 p-3 rounded bg-white">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>CHANNEL</th>
+                    <th>USER AGENT</th>
+                    <th>USERNAME</th>
+                    <th>LAST LOGIN</th>
+                    <th>DAYS AGO</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="mytbody"></tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end pt-3">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+        </main>
+        {% endblock changingpart %}
+    </section>
+{% endblock bodycode %}
+{% block myscripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // jQuery(window).on("load", function (e) {
+        window.CSRF_TOKEN = "{{ csrf_token }}";
+        function getStatus (days) {
+          let classD = days>=25 ? 'bg-danger' : 'bg-success';
+          let ddue = days>=25 ? 'due' : 'active';
+          return (
+            `<td><h4><span class="badge ${classD} ml-2 text-white">${ddue}</span></h4></td>`
+          )
+        };
+        
+          $.ajax({
+              method: "POST",
+              url: "/users/",
+              data: {
+                csrfmiddlewaretoken: window.CSRF_TOKEN,
+              },
+              success: function (data) {
+                console.log(data)
+                let tbody = document.getElementById("mytbody")
+                let htmltbody = tbody.innerHTML
+                tbody.innerHTML = ''
+                for (var i=0; i<data.data.length; i++) {
+                  let current = data.data[i]
+                  let date = new Date(current.last_login)
+                  let today = new Date()
+                  let diffTime = Math.abs(date - today);
+                  let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  tbody.innerHTML += `
+                  <tr>
+                    <td>${current.channel}</td>
+                    <td>${current.user_agent}</td>
+                    <td>${current.username}</td>
+                    <td>${current.last_login}</td>
+                    <td>${diffDays} days ago</td>
+                    ${getStatus(diffDays)}
+                  </tr>
+                `
+
+                // location.reload();
+              }
+            }
+            });
+    })
+  </script>
+{% endblock myscripts %}

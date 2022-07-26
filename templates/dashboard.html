@@ -1,0 +1,75 @@
+{% extends 'users.html' %} {% load static %} {% block title %}| dashboard{% endblock title %} 
+{% block changingpart %}
+<main class="display-main bg-light ml-5">
+  <header>
+    <h1 class="px-5 py-3 main-title">Dashboard</h1>
+  </header>
+
+  <div class="activity-panel p-3 mb-2">
+    <div class="activity-report p-3 mx-3 rounded bg-primary">
+      <h2 class="px-5 text-white fw-bold">Scraper Engine Health<small id="engine-small"></small></h2>
+      <span class="text-muted px-5"
+        ><p
+          class="h1 text-white text-center"
+          style="font-size: 8rem"
+          id="engine-status"
+        ></p
+      ></span>
+    </div>
+    <div class="activity-active bg-white pb-5 rounded">
+      <div style="margin: 0 auto">
+        <span class=""
+          ><i class="bi bi-person-bounding-box active-icon"></i></span
+        ><br />
+        <span>active users</span>
+      </div>
+      <div class="online-users mt-5">
+        <div>
+          <h2 class="add-weight">8%</h2>
+          <span>percentage</span>
+        </div>
+        <div>
+          <h1 class="add-weight">169</h1>
+          <span>online users</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded welcome-pic" style="box-sizing: border-box">
+    <h1 class="text-white welcome-text1">
+      <span class="welcome-text">you're Welcome</span>
+    </h1>
+    <img
+      src="{% static '/assets/welcome-image-2.svg' %}"
+      alt="welcome-image"
+      class="welcome-img"
+    />
+  </div>
+</main>
+{% endblock changingpart %} {% block myscripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    window.CSRF_TOKEN = "{{ csrf_token }}";
+    $.ajax({
+      method: "POST",
+      url: "{% url 'dashboard' %}",
+      data: {
+        csrfmiddlewaretoken: window.CSRF_TOKEN,
+      }
+    }).then(function (data) {
+      
+      if (data.enginehealth == true) {
+        $("#engine-status").html("100% <br/>");
+        $("#engine-small").html("  (working properly)");
+      } else {
+        $("#engine-status").html(
+          "100% <br/> <span>Have you changed mydash.one password?</span>"
+        );
+        $("#engine-small").html("  (not working properly)");
+      }
+    });
+  });
+</script>
+{% endblock myscripts %}
