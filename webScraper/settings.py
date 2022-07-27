@@ -91,25 +91,25 @@ WSGI_APPLICATION = 'webScraper.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd311qon3vbrun7',
-#         'USER': 'uruwllzzddbgey',
-#         'PASSWORD': 'b29e9143ea4c6a8787e8877ce40bee57d92e543a7fac7eb8eaed566f6b81fca8',
-#         'HOST': 'ec2-54-76-43-89.eu-west-1.compute.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
-
 DATABASES = {
-    'default': {}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd311qon3vbrun7',
+        'USER': 'uruwllzzddbgey',
+        'PASSWORD': 'b29e9143ea4c6a8787e8877ce40bee57d92e543a7fac7eb8eaed566f6b81fca8',
+        'HOST': 'ec2-54-76-43-89.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+
+# DATABASES = {
+#     'default': {}
+# }
+
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = os.environ['EMAIL_HOST']
@@ -119,11 +119,11 @@ DATABASES['default'].update(db_from_env)
 # EMAIL_HOST_PASSWORD =os.environ['EMAIL_HOST_PASSWORD']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-pulse.com'
-EMAIL_PORT = 2525
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'info@streamysubscriptions.com'
-EMAIL_HOST_PASSWORD ='tafabalewa1omoobaloluwa2com'
+EMAIL_HOST_USER = 'streamyiptv@yahoo.com'
+EMAIL_HOST_PASSWORD ='5GLZJ9gaXc4Sq2Cv'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

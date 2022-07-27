@@ -96,16 +96,20 @@
                 for (var i=0; i<data.data.length; i++) {
                   let current = data.data[i]
                   let date = new Date(current.last_login)
-                  let today = new Date()
+                  let today = new Date();
+                  let month = date.getUTCMonth() + 1; //months from 1-12
+                  let day = date.getUTCDate();
+                  let year = date.getUTCFullYear();
+                  newdate = year + "/" + month + "/" + day;
                   let diffTime = Math.abs(date - today);
-                  let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                   tbody.innerHTML += `
                   <tr>
                     <td>${current.channel}</td>
                     <td>${current.user_agent}</td>
                     <td>${current.username}</td>
-                    <td>${current.last_login}</td>
-                    <td>${diffDays} days ago</td>
+                    <td>${newdate}</td>
+                    <td>${diffDays} day(s) ago</td>
                     ${getStatus(diffDays)}
                   </tr>
                 `
