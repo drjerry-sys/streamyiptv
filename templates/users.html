@@ -25,7 +25,7 @@
           {% with request.resolver_match.url_name as url_name %}
             <ul class="py-5 aside-ul">
                 <li><a href="{% url 'dashboard' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'dashboard' %}active{% endif %}"><i class="bi bi-speedometer mr-3"></i></i>Dashboard</a></li>
-                <li><a href="{% url 'users' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'users' %}active{% endif %}" ><i class="bi bi-people-fill mr-3"></i></i>Users<span class="badge bg-danger ml-2 text-white">5</span></a></li>
+                <li><a href="{% url 'users' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'users' %}active{% endif %}" ><i class="bi bi-people-fill mr-3"></i></i>Users<span class="badge bg-primary ml-2 text-white" id="noCollected"></span></a></li>
                 <li><a href="{% url 'settings' %}" class="text-muted d-inline-block py-3 my-2 px-2 menus {% if url_name == 'settings' %}active{% endif %}"><i class="bi bi-gear-fill mr-3"></i>Settings</a></li>
             </ul>
           {% endwith %}
@@ -40,6 +40,7 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
+                    <th>S/N</th>
                     <th>CHANNEL</th>
                     <th>USER AGENT</th>
                     <th>USERNAME</th>
@@ -90,6 +91,8 @@
               },
               success: function (data) {
                 console.log(data)
+                let noCollected = document.getElementById("noCollected")
+                noCollected.innerHTML = data.data.length
                 let tbody = document.getElementById("mytbody")
                 let htmltbody = tbody.innerHTML
                 tbody.innerHTML = ''
@@ -105,6 +108,7 @@
                   let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                   tbody.innerHTML += `
                   <tr>
+                    <td>${i+1}</td>
                     <td>${current.channel}</td>
                     <td>${current.user_agent}</td>
                     <td>${current.username}</td>

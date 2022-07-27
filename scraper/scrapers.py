@@ -63,6 +63,9 @@ def handleScraping(driver, mydash):
     elif all_tr and not extract:
         print("no user is currently online!")
 
+    # cleanup
+    extract = []
+
 def scrape(login_url, activityLogUrl):
     mydash = MyDashOne.objects.all()[0]
     payload = {

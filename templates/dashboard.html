@@ -6,7 +6,7 @@
   </header>
 
   <div class="activity-panel p-3 mb-2">
-    <div class="activity-report p-3 mx-3 rounded bg-primary">
+    <div class="activity-report p-3 mx-3 rounded" id="activity-board">
       <h2 class="px-5 text-white fw-bold">Scraper Engine Health<small id="engine-small"></small></h2>
       <span class="text-muted px-5"
         ><p
@@ -21,17 +21,17 @@
         <span class=""
           ><i class="bi bi-person-bounding-box active-icon"></i></span
         ><br />
-        <span>active users</span>
       </div>
       <div class="online-users mt-5">
-        <div>
+        <!-- <div>
           <h2 class="add-weight">8%</h2>
           <span>percentage</span>
         </div>
         <div>
           <h1 class="add-weight">169</h1>
           <span>online users</span>
-        </div>
+        </div> -->
+        <a type="button" href="{% url 'logout' %}" class="btn btn-secondary w-50 py-4 text-white fs-3 fw-bold">Log Out</a>
       </div>
     </div>
   </div>
@@ -59,15 +59,17 @@
         csrfmiddlewaretoken: window.CSRF_TOKEN,
       }
     }).then(function (data) {
-      
+      let element = document.getElementById("activity-board");
       if (data?.enginehealth == true) {
         $("#engine-status").html("100% <br/>");
         $("#engine-small").html("  (working properly)");
+        element.classList.add("bg-primary");
       } else {
         $("#engine-status").html(
           "0% <br/> "
         );
-        $("#engine-small").html("  (not working properly)");
+        $("#engine-small").html("  (not working properly)   check mydash.one password in scraper");
+        element.classList.add("bg-danger");
       }
     });
   });

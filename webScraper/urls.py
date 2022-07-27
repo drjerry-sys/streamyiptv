@@ -25,6 +25,7 @@ urlpatterns = [
     path('settings/', to_settings, name='settings'),
     path('dashboard/', dashboard, name='dashboard'),
     path('users/', allusers, name='users'),
+    path('logout/', to_logOut, name='logout'),
     path('forgot_password/', forgot_password, name='forgot_password'),
     path('reset-password/<str:email>/', reset_password, name='reset_password'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

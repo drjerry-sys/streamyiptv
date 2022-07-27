@@ -38,7 +38,7 @@
 }
 
 .form {
-    width: 50%;
+    width: 70rem !important;
     border-radius: 10px;
     border: 2px solid var(--deeper-gray);
     padding: 50px 50px;

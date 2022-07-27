@@ -1,7 +1,7 @@
 {% extends 'users.html' %}
 {% load static %}
-{% block changingpart %}
 {% block title %}| settings{% endblock title %}
+{% block changingpart %}
 <main class="display-main bg-light ml-5">
   <header>
       <h1 class="px-5 py-3 main-title">Settings</h1>
@@ -46,11 +46,11 @@
         {% csrf_token %}
           <div class="row py-3">
               <div class="col">
-                <label for="mydashusername" class="form-label">Formal Username:</label>
+                <label for="mydashusername" class="form-label">Username:</label>
                 <input type="text" class="form-control" placeholder="Enter username" name="mydashusername">
               </div>
               <div class="col">
-                <label for="mydashpswd" class="form-label">Formal password:</label>
+                <label for="mydashpswd" class="form-label">password:</label>
                 <input type="password" class="form-control" placeholder="Enter password" name="mydashpswd">
               </div>
           </div>

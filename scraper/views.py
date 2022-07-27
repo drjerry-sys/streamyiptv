@@ -71,14 +71,11 @@ def to_settings(request):
             return HttpResponse({'messagef': 'password failed, check formal password!'})
 
         elif request.POST['form_type'] == 'mydash':
-            print(request.POST)
-            username, fpassword = request.POST['formData[mydashusername]'], request.POST['formData[mydashpswd]']
+            username, fpassword = request.POST['formData[mydashusername]'].strip(), request.POST['formData[mydashpswd]']
             npassword = request.POST['formData[mydashnpswd]']
             mydashUser = MyDashOne.objects.filter(username=username, password=fpassword)
-            print(mydashUser)
             if mydashUser.exists():
-                print('hi')
-                dash_user = MyDashOne(username=username, password=fpassword)
+                dash_user = MyDashOne.objects.get(username=username, password=fpassword)
                 dash_user.password = npassword
                 dash_user.save()
                 return HttpResponse({'messages': 'successfully changed!'})
@@ -102,16 +99,17 @@ def allusers(request):
 
 def forgot_password(request):
     if request.method == "POST":
+        #  note that I use the last_name column to save verification code
         email = request.POST.get('email')
         user = User.objects.filter(email=email).exists()
-        code = random.randrange(1000, 9999)
+        code = random.randrange(10000, 99999)
         if user:
             o = User.objects.get(email=email)
             send_mail(
                 subject='Scraper Password Reset Code',
                 message=f'this is your code {str(code)}',
                 from_email=settings.EMAIL_HOST_USER,
-                recipient_list=['drjerrypro@gmail.com']
+                recipient_list=[email]
             )
             try:
                 o.last_name = str(code)
@@ -127,8 +125,8 @@ def reset_password(request, email):
     # if request.GET['']
     global resetPass
     if request.method == "POST":
-        code = request.POST.get('code')
-        password = request.POST.get('password')
+        code = request.POST.get('code-received')
+        password = request.POST.get('pswd')
         try:
             user = User.objects.get(email=email)
             code_db = str(user.last_name)
@@ -149,3 +147,7 @@ def reset_password(request, email):
             return render(request, 'authentication/password-reset.html', {'status': 1})
     
     return render(request, 'authentication/password-reset.html')
+
+def to_logOut(request):
+    logout(request)
+    return redirect('login')

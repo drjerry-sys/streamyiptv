@@ -6,7 +6,7 @@ from django.db import models
 class MyDashOne(models.Model):
     username = models.CharField(max_length=120)
     password = models.CharField(max_length=1000)
-    engineIsSafe = models.BooleanField()
+    engineIsSafe = models.BooleanField(null=True)
 
 class ScrapedData(models.Model):
     username = models.CharField(max_length=120)
