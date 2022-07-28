@@ -4,6 +4,7 @@ from selenium.webdriver import Chrome, ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from .models import MyDashOne, ScrapedData
 from bs4 import BeautifulSoup
 from .models import ScrapedData
@@ -91,5 +92,11 @@ def scrape(login_url, activityLogUrl):
     # scraping from mydash.one
     time.sleep(0.3) 
     driver.get(activityLogUrl)
+    time.sleep(2)
+    driver.find_element(By.CLASS_NAME, "select2-selection--single").click()
+    time.sleep(1)
+    val = driver.find_element(By.CLASS_NAME, "select2-search__field")
+    val.send_keys("1000")
+    val.send_keys(Keys.RETURN)
     time.sleep(10)
     handleScraping(driver, mydash)

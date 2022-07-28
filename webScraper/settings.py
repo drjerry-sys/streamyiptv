@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qz#beug2k2y_x^gyr&cpl+zt()4l33=9-uoq8dp56(-vh!rovr'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com', 'http://127.0.0.1', 'localhost']
 
@@ -91,17 +91,6 @@ WSGI_APPLICATION = 'webScraper.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd311qon3vbrun7',
-#         'USER': 'uruwllzzddbgey',
-#         'PASSWORD': 'b29e9143ea4c6a8787e8877ce40bee57d92e543a7fac7eb8eaed566f6b81fca8',
-#         'HOST': 'ec2-54-76-43-89.eu-west-1.compute.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
 
 DATABASES = {
     'default': {}
@@ -111,20 +100,12 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = os.environ['EMAIL_HOST']   ddsmkblqbermpfdt 
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True 
-# EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-# EMAIL_HOST_PASSWORD =os.environ['EMAIL_HOST_PASSWORD']
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.zoho.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'streamyiptv@zohomail.com'
-EMAIL_HOST_PASSWORD ='Remioff80'
+EMAIL_HOST = os.environ['EMAIL_HOST'] 
+EMAIL_PORT = os.environ['EMAIL_PORT'] 
+EMAIL_USE_TLS = True 
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD =os.environ['EMAIL_HOST_PASSWORD']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -175,8 +156,6 @@ STATICFILES_DIRS = [
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = 'dashboard/'
-
-DATABASE_URI="postgres://uruwllzzddbgey:b29e9143ea4c6a8787e8877ce40bee57d92e543a7fac7eb8eaed566f6b81fca8@ec2-54-76-43-89.eu-west-1.compute.amazonaws.com:5432/d311qon3vbrun7"
 
 # celery settings
 #localhost
